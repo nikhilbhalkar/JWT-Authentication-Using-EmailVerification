@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+   <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    
+    .login-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        width: 300px;
+        margin-right: 20px; /* Added margin from the right side */
+    }
+    
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px; /* Increased space between label and input */
+        margin-right: 20px;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 5px; /* Added margin below the label */
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+    }
+    
+    button {
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.3s;
+        margin-top: 10px; /* Added margin between the button and the form inputs */
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+    
+    .register-link {
+        text-align: center;
+        margin-top: 20px; /* Added margin from the top */
+    }
+    
+    .register-link a {
+        text-decoration: none;
+        color: #007BFF;
+    }
+    .card-body{
+        height: 30px;
+        width: 300px;
+        background-color: #007BFF;
+        color: #fff;
+        border-radius: 5px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        padding-top: 4px;
+        
+    }
+    
+   </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="login-container">
+      
+        <h2>Login Here..!</h2>
+        <form action="/login" method="POST">
+           
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <div class="card-body">
+            <a class="btn btn-block btn-social btn-google" href="/auth/google" role="button">
+              <i class="fab fa-google"></i>
+              Sign In with Google
+            </a>
+          </div>
+        <div class="register-link">
+            <p>Don't have an account? <a href="/sighup">Register here</a></p>
+        </div>
+    </div>
+</body>
+</html>

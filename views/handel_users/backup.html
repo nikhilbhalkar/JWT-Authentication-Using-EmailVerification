@@ -1,0 +1,127 @@
+const express = require("express");
+const app = express();
+const connectdb = require("./server/database/connection");
+const userRouter = require("./server/router/user_router");
+const cookieParser = require("cookie-parser");
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const findOrCreate = require('mongoose-findorcreate');
+const passport = require("passport");
+const User = require("./server/models/user_model");
+const bodyParser = require("body-parser");
+const session = require('express-session');
+const Product = require("./server/models/product")
+
+require("dotenv").config();
+
+app.use(bodyParser.json());
+//usecookies
+app.use(cookieParser());
+// view engine
+app.set("view engine", "ejs");
+// url encoded
+app.use(express.urlencoded({ extended: false }));
+// json middelware
+app.use(express.json());
+// database
+connectdb();
+// assets
+app.use(express.static("assets"));
+
+app.use(userRouter);
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+app.use(session({
+  secret: "Our little secret.",
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());  
+app.use(passport.session());
+// cookies
+app.get("/set-cookies", (req, res) => {
+  //   res.setHeader("Set-Cookie", "newUser=true");
+  res.cookie("newUser", false);
+  res.cookie("isEmployee", true, { maxAge: 1000 * 60 * 60 * 24, secure: true });
+  res.send("you got the cookie!");
+});
+
+app.get("/read-cookies", (req, res) => {
+  const cookies = req.cookies;
+  console.log(cookies.newUser);
+  res.json(cookies);
+});
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT,()=>{
+  console.log("server is listening on 3000");
+});
+
+
+/*
+
+passport.use(User.createStrategy());
+*/
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/google/secrets",
+    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    console.log(profile);
+    const email = profile.id;
+    const displayName = profile.displayName;
+    const provider = profile.provider;
+    //const email = profile.emails[0].value;
+ 
+    //console.log('User ID:', userId);
+    console.log('Display Name:', displayName);
+    console.log('Provider:', provider);
+   
+    User.findOrCreate({email,password: "123456"}, function (err, user) {
+      console.log("in password use function")
+      console.log(err)
+      return cb(err, user);
+    });
+  }
+));
+
+
+
+app.get("/auth/google",
+  passport.authenticate('google', { scope: ["profile"] })
+);
+
+app.get("/auth/google/secrets",
+  passport.authenticate('google', { failureRedirect: "/login" }),
+  function(req, res) {
+    // Successful authentication, redirect to secrets.
+    res.redirect("/content");
+  });
+
+  app.get("/secrets", async function  (req, res){
+    const productall = await Product.find({});
+    User.find({"content": {$ne: null}},{ productall }, function(err, foundUsers){
+      if (err){
+        console.log(err);
+      } else {
+        if (foundUsers) {
+          res.render("content",{ productall }, {usersWithSecrets: foundUsers});
+        }
+      }
+    });
+  });

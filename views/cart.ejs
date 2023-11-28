@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart</title>
+    <style>
+        /* Your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #232f3e; /* Amazon Blue */
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 36px;
+        }
+
+        nav {
+            background-color: #232f3e;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .cart-items {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-item-image {
+            max-width: 60px;
+            max-height: 60px;
+            margin-right: 10px;
+        }
+
+        .cart-item-title,
+        .cart-item-price {
+            font-size: 18px;
+        }
+
+        .cart-item-price {
+            color: #b12704; /* Amazon Orange */
+        }
+
+        .delete-button {
+            background-color: #e40000; /* Red */
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Your Shopping Cart</h1>
+    </header>
+    <nav>
+        <a href="/content">Continue Shopping</a>
+    </nav>
+    <div class="cart-items">
+        <!-- Cart items will be displayed here -->
+    </div>
+
+    <script>
+        // JavaScript code to display cart items from localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartItemsList = document.querySelector('.cart-items');
+            
+            // Retrieve cart items from localStorage
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            // Display cart items
+            cartItems.forEach((item) => {
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+                cartItem.innerHTML = `
+                    <img class="cart-item-image" src="https://ik.imagekit.io/nocu0cjdv/mobile1.jpg?updatedAt=1699024539912" alt="${item.title}">
+                    <div class="cart-item-title">${item.title}</div>
+                    <div class="cart-item-price">${item.price}</div>
+                    <button class="delete-button">&#10006;</button>
+                `;
+
+                const deleteButton = cartItem.querySelector('.delete-button');
+                deleteButton.addEventListener('click', () => {
+                    // Remove the item from the cartItems array
+                    const itemIndex = cartItems.indexOf(item);
+                    if (itemIndex > -1) {
+                        cartItems.splice(itemIndex, 1);
+                        // Update localStorage
+                        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                        // Remove the item's display from the page
+                        cartItemsList.removeChild(cartItem);
+                    }
+                });
+
+                cartItemsList.appendChild(cartItem);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+*{ 
+    box-sizing: border-box;
+}
+/* main color #AD0000 */
+.nav-link {
+    color: #000;
+}
+.navbar-nav {
+    margin: 0 0 0 auto;
+    height: 56px ;
+}
+.index { 
+    height: calc(100vh - 56px);
+}
+.content .row .col-lg-3 .card {
+    margin: 10px;
+    padding: 10px;
+}
+form { 
+    text-align: center;
+}
+form .form-group { 
+    margin: 10px 0;
+}
+form .err { 
+    color: red;
+}
+header { 
+    height: 80px;
+    background-color: #ed2c25;
+    color: white;
+}
+header .nav .logo a {
+    text-decoration: none;
+    color: white;
+}
+header .nav .logo a h2 {
+    margin: 0;
+}
+header .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+header .nav .links ul { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+header .nav .links ul li {
+    padding: 0 0 0 15px;
+}
+header .nav .links ul li a {
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+}
+.landing { 
+    background-image: url(../imgs/wallpaperflare.com_wallpaper.jpg);
+    background-size: cover;
+    height: calc(100vh - 80px);
+    background-position: center center;
+    position: relative;
+}
+.landing::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0,20%);
+}
+.landing .text { 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    z-index: 1;
+}
+.landing .text h1 { 
+    color: #ed2c25;
+    font-size: 70px;
+    font-weight: bold;
+}
+.landing .text h2 { 
+    color: white;
+}
+.content_btn { 
+    background-color: #ed2c25;
+    color:white;
+    border: none;
+    
+}
+.content_btn:hover { 
+    background-color: white;
+    color:#ed2c25;
+    transition: 0.3s;
+    border: none;
+    outline: none;
+}
+.form_div {
+    background-color: #eeeeee;
+}
+.register_form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px);
+}
+.register_form form {    
+    min-height: auto;
+    min-width: 400px;
+    margin-bottom: 100px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 6px;
+    box-shadow: #ddd 0 0 10px 0;
+}
+.register_form form h2{
+    text-align: start;
+    font-size: 50px;
+}
+.register_form form input{
+    width: 100%;
+    padding: 12px 5px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid rgb(196, 196, 196);
+}
+.register_form form .bt {
+    background-color: #ed2c25;
+    color:white;
+    transition: 0.3s;
+}
+.register_form form .bt:hover {
+    background-color:white ;
+    color:#ed2c25;
+}
+@media (max-width:768px) {
+    .landing .text h1 { 
+        font-size: 40px;
+    }
+    .register_form form {
+        min-width: 300px;
+    }
+    header .nav {
+        margin: 0 5px;
+    }
+}
